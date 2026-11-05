@@ -1,94 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Thi 894 Câu Bảo Hiểm PVI Care</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --success-color: #16a34a;
-            --error-color: #dc2626;
-            --secondary-color: #64748b;
-            --bg-color: #f8fafc;
-        }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-color); margin: 0; padding: 12px; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #f1f5f9; padding: 10px 15px; border-radius: 8px; }
-        .stats { font-size: 0.95em; color: #334155; font-weight: bold; }
-        
-        .nav-box { display: flex; gap: 8px; margin-bottom: 15px; }
-        input[type="number"] { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; text-align: center; }
-        button { padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer; background: var(--primary-color); color: white; font-weight: 500; font-size: 15px; }
-        
-        .action-navs { display: flex; gap: 10px; margin: 15px 0; }
-        .btn-nav { flex: 1; background: #e2e8f0; color: #334155; font-weight: bold; padding: 12px; text-align: center; }
-        .btn-nav:active { background: #cbd5e1; }
-        
-        .question-box { margin-bottom: 15px; }
-        #question-text { font-size: 1.1em; line-height: 1.5; color: #1e293b; margin-bottom: 15px; font-weight: 600; }
-        .option { display: block; padding: 14px; margin: 10px 0; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.15s; font-size: 15px; line-height: 1.4; }
-        .option:active { background: #f1f5f9; }
-        .option.correct { background: #dcfce7; border-color: var(--success-color); color: #14532d; font-weight: bold; }
-        .option.wrong { background: #fee2e2; border-color: var(--error-color); color: #7f1d1d; }
-        
-        .explanation { display: none; margin-top: 15px; padding: 15px; background: #f0f9ff; border-left: 4px solid var(--primary-color); border-radius: 4px; }
-        .explanation strong { color: #0369a1; }
-        
-        .wrong-list { margin-top: 25px; border-top: 2px dashed #e2e8f0; padding-top: 15px; }
-        .wrong-title { font-size: 1em; color: var(--error-color); margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .wrong-flex { display: flex; flex-wrap: wrap; gap: 8px; }
-        .wrong-item { background: #fee2e2; color: var(--error-color); padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid #fca5a5; }
-        .wrong-item:active { background: #fca5a5; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b35">
+<title>Ôn tập trắc nghiệm</title>
+<style>
+:root{--ink:#18332e;--muted:#6c7e79;--green:#176b55;--green2:#e6f4ee;--red:#b83d45;--red2:#fff0ef;--gold:#c18b32;--paper:#f5f7f4;--line:#e2e9e4;--white:#fff;--shadow:0 14px 40px rgba(25,57,48,.08)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#eef4ef,#f8f7f1 55%,#edf3f0);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.app{max-width:1120px;margin:0 auto;padding:28px 18px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:var(--green);color:white;display:grid;place-items:center;font-size:23px;box-shadow:0 8px 20px #176b5533}.brand h1{font-size:21px;margin:0;letter-spacing:-.4px}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 13px;border-radius:11px;font-weight:650;cursor:pointer;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:#aac8ba}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn.soft{background:var(--green2);border-color:#d4e9df;color:var(--green)}.btn.danger{color:var(--red);background:#fff;border-color:#f0d7d7}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}.main,.side-card{background:var(--white);border:1px solid #e8eee9;border-radius:20px;box-shadow:var(--shadow)}.main{padding:25px}.side{display:grid;gap:16px}.side-card{padding:18px}.eyebrow{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:13px;font-weight:700}.mode-pill{background:#eef5f1;color:var(--green);border-radius:99px;padding:5px 10px}.question{font-size:21px;line-height:1.5;font-weight:720;letter-spacing:-.3px;margin:20px 0 22px;white-space:pre-wrap}.options{display:grid;gap:11px}.option{width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;padding:14px 15px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);cursor:pointer;font:inherit;line-height:1.5;transition:.16s}.option:hover:not(.disabled){border-color:#83b7a0;background:#f7fbf8;transform:translateY(-1px)}.option .letter{flex:0 0 29px;height:29px;border-radius:9px;background:#eff3f0;display:grid;place-items:center;font-weight:800;color:#45665b;font-size:13px}.option .opt-text{white-space:pre-wrap}.option.correct{background:var(--green2);border-color:#8bc4a6}.option.correct .letter{background:var(--green);color:#fff}.option.wrong{background:var(--red2);border-color:#e6a1a1}.option.wrong .letter{background:var(--red);color:white}.option.disabled{cursor:default}.feedback{margin-top:17px;padding:14px 16px;border-radius:13px;background:#f5f8f6;border:1px solid var(--line)}.feedback[hidden]{display:none}.feedback strong{display:block;margin-bottom:4px}.feedback.good{background:var(--green2);border-color:#cce7d8}.feedback.bad{background:var(--red2);border-color:#f1d1d1}.feedback p{margin:4px 0 0;white-space:pre-wrap}.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:23px;padding-top:18px;border-top:1px solid var(--line)}.nav-right{display:flex;gap:8px}.jump{display:flex;gap:7px;align-items:center}.jump input{width:85px;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:11px;border-radius:12px;background:#f6f8f6}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{font-size:21px;letter-spacing:-.5px}.progress{height:8px;border-radius:99px;background:#edf1ed;overflow:hidden;margin-top:13px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#176b55,#70b68e);transition:width .25s}.side-title{font-size:14px;font-weight:800;margin:0 0 13px;display:flex;justify-content:space-between;align-items:center}.tool-list{display:grid;gap:8px}.tool-list .btn{text-align:left;width:100%;display:flex;justify-content:space-between;align-items:center}.status{font-size:11px;color:var(--muted);font-weight:600}.wrong-list{display:flex;flex-wrap:wrap;gap:7px;max-height:220px;overflow:auto}.wrong-item{border:1px solid #f0d6d6;background:#fff6f5;color:#a63d42;padding:6px 10px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:700}.wrong-item:hover{background:#ffe9e7}.empty{color:var(--muted);font-size:13px}.hint{font-size:12px;color:var(--muted);line-height:1.6;margin:12px 0 0}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#18332e;color:white;padding:10px 15px;border-radius:11px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:5}.toast.show{opacity:1}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}.upload{display:none}@media(max-width:820px){.layout{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.side-card:last-child{grid-column:1/-1}}@media(max-width:560px){.app{padding:16px 11px 32px}.top{align-items:flex-start}.brand h1{font-size:18px}.top-actions{max-width:125px}.top-actions .btn{font-size:12px;padding:8px}.main{padding:17px}.question{font-size:18px}.side{grid-template-columns:1fr}.side-card:last-child{grid-column:auto}.nav{flex-wrap:wrap}.nav-right{margin-left:auto}.jump{order:3;width:100%}.jump input{flex:1}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
 </head>
 <body>
-
-<div class="container">
-    <div class="header">
-        <strong id="current-index" style="color: var(--primary-color); font-size: 1.1em;">Câu --/894</strong>
-        <div class="stats">Lỗi sai: <span id="wrong-count" style="color: var(--error-color);">0</span></div>
-    </div>
-
-    <!-- Ô điều hướng nhanh -->
-    <div class="nav-box">
-        <input type="number" id="jump-input" placeholder="Nhập số câu (1-894)..." min="1" max="894">
-        <button onclick="jumpToQuestion()">Đến câu</button>
-        <button onclick="shuffleCurrent()" style="background: var(--secondary-color);">Ngẫu nhiên 🎲</button>
-    </div>
-
-    <!-- Khu vực câu hỏi -->
-    <div id="quiz-area">
-        <div class="question-box">
-            <div id="question-text">Đang tải dữ liệu...</div>
-            <div id="options-container"></div>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">✓</div><div><h1>Ôn tập trắc nghiệm</h1><p id="subtitle">Bộ câu hỏi được tích hợp sẵn trong trang</p></div></div>
+    <div class="top-actions"><button class="btn" id="upload-trigger">Nạp bộ dữ liệu</button><input class="upload" id="data-file" type="file" accept=".json,.csv,application/json,text/csv"></div>
+  </header>
+  <div class="layout">
+    <main class="main" id="quiz-area">
+      <div class="eyebrow"><span id="current-index">Đang tải câu hỏi...</span><span class="mode-pill" id="mode-label">Học toàn bộ</span></div>
+      <div class="question" id="question-text">Vui lòng chờ...</div>
+      <div class="options" id="options-container"></div>
+      <section class="feedback" id="explanation-box" hidden><strong id="feedback-title">Giải thích</strong><p id="explanation-text"></p></section>
+      <div class="nav">
+        <button class="btn" id="prev-btn">← Câu trước</button>
+        <div class="jump"><input id="jump-input" type="number" min="1" placeholder="Số câu"><button class="btn" id="jump-btn">Đi đến</button></div>
+        <div class="nav-right"><button class="btn primary" id="next-btn">Câu tiếp →</button></div>
+      </div>
+    </main>
+    <aside class="side">
+      <section class="side-card">
+        <h2 class="side-title">📊 Kết quả học tập</h2>
+        <div class="stats-grid">
+          <div class="stat"><span>Tổng câu</span><strong id="total-count">0</strong></div>
+          <div class="stat"><span>Đã trả lời</span><strong id="answered-count">0</strong></div>
+          <div class="stat"><span>Trả lời đúng</span><strong id="correct-count">0</strong></div>
+          <div class="stat"><span>Câu sai</span><strong id="wrong-count">0</strong></div>
+          <div class="stat"><span>Chưa làm</span><strong id="unanswered-count">0</strong></div>
+          <div class="stat"><span>Độ chính xác</span><strong id="accuracy-rate">0%</strong></div>
         </div>
-        
-        <!-- Thanh điều hướng Trước/Sau -->
-        <div class="action-navs">
-            <button class="btn-nav" onclick="prevQuestion()">◀ Câu trước</button>
-            <button class="btn-nav" onclick="nextQuestion()">Câu sau ▶</button>
+        <div class="progress"><div id="progress-bar"></div></div>
+      </section>
+      <section class="side-card">
+        <h2 class="side-title">⚙️ Chế độ luyện tập</h2>
+        <div class="tool-list">
+          <button class="btn soft" id="shuffle-question-btn">🔀 Trộn câu hỏi <span class="status" id="shuffle-question-status">Tắt</span></button>
+          <button class="btn soft" id="shuffle-answer-btn">🃏 Trộn phương án <span class="status" id="shuffle-answer-status">Tắt</span></button>
+          <button class="btn" id="review-wrong-btn">↻ Ôn tập câu sai <span id="wrong-badge">0</span></button>
+          <button class="btn" id="all-questions-btn">☷ Học tất cả câu</button>
+          <button class="btn danger" id="reset-progress-btn">Xóa tiến độ học</button>
         </div>
-        
-        <!-- Hộp giải thích khi chọn xong -->
-        <div id="explanation-box" class="explanation">
-            <strong>Cơ sở pháp lý / Tài liệu tham khảo:</strong>
-            <p id="explanation-text" style="margin: 8px 0 0 0; color: #334155; font-size: 14px; line-height: 1.4;"></p>
-        </div>
-    </div>
-
-    <!-- Danh sách các câu làm sai để ôn tập trọng tâm -->
-    <div class="wrong-list">
-        <div class="wrong-title">
-            <strong>Danh sách câu làm sai (Chạm để làm lại):</strong>
-        </div>
-        <div id="wrong-history" class="wrong-flex"></div>
-    </div>
+        <p class="hint">Phím tắt: A-Z chọn phương án đang hiển thị, ← câu trước, → câu tiếp theo, Enter câu tiếp theo.</p>
+      </section>
+      <section class="side-card">
+        <h2 class="side-title">📌 Danh sách câu sai <span id="wrong-list-count">0</span></h2>
+        <div class="wrong-list" id="wrong-history"><span class="empty">Chưa có câu sai. Cứ bình tĩnh chinh phục từng câu!</span></div>
+      </section>
+    </aside>
+  </div>
+  <div class="footer">Tiến độ được lưu trên trình duyệt này · Dữ liệu câu hỏi nằm ngay trong file HTML</div>
 </div>
-
+<div class="toast" id="toast"></div>
 <script>
-    // Toàn bộ dữ liệu tự động đồng bộ từ file 123321456654.csv
-    const rawData = [
+'use strict';
+// Dữ liệu 879 câu hỏi được nhúng trực tiếp. Không cần file CSV/JSON bên ngoài.
+const rawData = [
   {
     "id": 1,
     "q": "Phát biểu nào dưới đây đúng:",
@@ -157,7 +133,6 @@
     "c": "C. Các đối tượng bảo hiểm phải độc lập với nhau.",
     "d": "D. A, C đúng",
     "e": "E. A, B,C đúng.",
-    "f": "THUẬT NGỮ BẢO HIỂM",
     "ans": "E"
   },
   {
@@ -7806,128 +7781,100 @@
   }
 ]
 
+
 ;
+const STORAGE_KEY = 'quiz_single_html_progress_v2';
+const DATA_VERSION = 'quiz-data-879-v1';
+const optionKeys = 'abcdefghijklmnoprstuvwxyz'.split('');
+let currentIndex = 0;
+let currentPosition = 0;
+let wrongList = new Set();
+let answerHistory = {};
+let questionOrder = [];
+let optionOrders = {};
+let answered = false;
+let quizMode = 'all';
+let shuffleQuestionEnabled = false;
+let shuffleAnswerEnabled = false;
+let toastTimer;
 
-
-        
-
-    let currentIndex = 0;
-    let wrongQuestions = new Set();
-    let isAnswered = false;
-    let currentShuffledOptions = [];
-
-    function loadQuestion(index) {
-        if (index < 0 || index >= rawData.length) return;
-        currentIndex = index;
-        isAnswered = false;
-        
-        const data = rawData[currentIndex];
-        document.getElementById('current-index').innerText = `Câu ${data.id}/894`;
-        document.getElementById('question-text').innerText = data.q;
-        document.getElementById('explanation-box').style.display = 'none';
-        
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-
-        // Tạo và xáo trộn thứ tự các phương án để không bị học vẹt vị trí
-        currentShuffledOptions = [
-            { text: data.a, key: 'A' },
-            { text: data.b, key: 'B' },
-            { text: data.c, key: 'C' },
-            { text: data.d, key: 'D' }
-        ].sort(() => Math.random() - 0.5);
-
-        currentShuffledOptions.forEach(opt => {
-            const div = document.createElement('div');
-            div.className = 'option';
-            div.innerText = `${opt.key}. ${opt.text}`;
-            div.onclick = () => checkAnswer(div, opt.key, data.ans);
-            container.appendChild(div);
-        });
-        
-        document.getElementById('jump-input').value = ''; 
-    }
-
-    function checkAnswer(element, selected, correct) {
-        if (isAnswered) return;
-        isAnswered = true;
-
-        const options = document.querySelectorAll('.option');
-        if (selected === correct) {
-            element.classList.add('correct');
-        } else {
-            element.classList.add('wrong');
-            wrongQuestions.add(currentIndex);
-            updateWrongList();
-            
-            // Highlight đáp án đúng để người dùng ghi nhớ tức thì
-            options.forEach((optDiv, idx) => {
-                if (currentShuffledOptions[idx].key === correct) {
-                    optDiv.classList.add('correct');
-                }
-            });
-        }
-
-        // Hiện tài liệu tham khảo ngay lập tức
-        document.getElementById('explanation-text').innerText = rawData[currentIndex].ref || "Xem tài liệu đính kèm trong file hướng dẫn.";
-        document.getElementById('explanation-box').style.display = 'block';
-    }
-
-    function nextQuestion() {
-        if (currentIndex < rawData.length - 1) {
-            loadQuestion(currentIndex + 1);
-        } else {
-            alert("Bạn đã ở câu hỏi cuối cùng!");
-        }
-    }
-
-    function prevQuestion() {
-        if (currentIndex > 0) {
-            loadQuestion(currentIndex - 1);
-        } else {
-            alert("Đây đã là câu hỏi đầu tiên!");
-        }
-    }
-
-    function jumpToQuestion() {
-        const val = parseInt(document.getElementById('jump-input').value);
-        if (isNaN(val) || val < 1 || val > 894) {
-            alert("Vui lòng nhập số câu hợp lệ từ 1 đến 894!");
-            return;
-        }
-        const targetIndex = rawData.findIndex(item => item.id === val);
-        if (targetIndex !== -1) {
-            loadQuestion(targetIndex);
-        } else {
-            alert("Không tìm thấy số câu này trong hệ thống dữ liệu!");
-        }
-    }
-
-    function shuffleCurrent() {
-        const randomIndex = Math.floor(Math.random() * rawData.length);
-        loadQuestion(randomIndex);
-    }
-
-    function updateWrongList() {
-        const container = document.getElementById('wrong-history');
-        document.getElementById('wrong-count').innerText = wrongQuestions.size;
-        container.innerHTML = '';
-        
-        // Sắp xếp lại danh sách câu sai theo thứ tự tăng dần để dễ theo dõi ôn tập
-        const sortedWrong = Array.from(wrongQuestions).sort((a, b) => rawData[a].id - rawData[b].id);
-        
-        sortedWrong.forEach(idx => {
-            const span = document.createElement('span');
-            span.className = 'wrong-item';
-            span.innerText = `Câu ${rawData[idx].id}`;
-            span.onclick = () => loadQuestion(idx);
-            container.appendChild(span);
-        });
-    }
-
-    // Khởi chạy ứng dụng với câu hỏi đầu tiên
-    loadQuestion(0);
+const $ = id => document.getElementById(id);
+function fingerprint(data){let h=2166136261;const s=JSON.stringify(data);for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return `${data.length}-${(h>>>0).toString(16)}`;}
+let DATA_FINGERPRINT=fingerprint(rawData);
+function normalizeData(data){
+  if(!Array.isArray(data)||!data.length)throw new Error('Không tìm thấy dữ liệu câu hỏi.');
+  return data.map((item,i)=>{
+    const q={...item,id:String(item.id??i+1),q:String(item.q??'').trim(),ans:String(item.ans??'').trim().toUpperCase(),explanation:String(item.explanation??'').trim()};
+    const keys=optionKeys.filter(k=>String(q[k]??'').trim()!=='');
+    if(!q.q||keys.length<2)throw new Error(`Câu ${q.id} thiếu nội dung hoặc có dưới 2 phương án.`);
+    if(q.ans&&!keys.includes(q.ans.toLowerCase()))throw new Error(`Đáp án câu ${q.id} không khớp phương án.`);
+    return q;
+  });
+}
+function shuffleArray(array){const a=[...array];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function saveProgress(){
+  const state={version:DATA_VERSION,fingerprint:DATA_FINGERPRINT,currentIndex,currentPosition,answerHistory:Object.fromEntries(Object.entries(answerHistory).map(([k,v])=>[k,{selected:v.selected,correct:v.correct,attempts:v.attempts||[]} ])),questionOrder,optionOrders,quizMode,shuffleQuestionEnabled,shuffleAnswerEnabled};
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){console.warn('Không lưu được tiến độ:',e);showToast('Trình duyệt không cho phép lưu tiến độ.');}
+}
+function loadProgress(){
+  try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(!s||s.version!==DATA_VERSION||s.fingerprint!==DATA_FINGERPRINT)return;
+    const valid=Array.isArray(s.questionOrder)&&s.questionOrder.length===rawData.length&&new Set(s.questionOrder).size===rawData.length&&s.questionOrder.every(i=>Number.isInteger(i)&&i>=0&&i<rawData.length);
+    questionOrder=valid?s.questionOrder:rawData.map((_,i)=>i);
+    answerHistory=s.answerHistory&&typeof s.answerHistory==='object'?s.answerHistory:{};
+    optionOrders=s.optionOrders&&typeof s.optionOrders==='object'?s.optionOrders:{};
+    quizMode=s.quizMode==='wrong'?'wrong':'all';shuffleQuestionEnabled=!!s.shuffleQuestionEnabled;shuffleAnswerEnabled=!!s.shuffleAnswerEnabled;
+    currentIndex=Number.isInteger(s.currentIndex)&&s.currentIndex>=0&&s.currentIndex<rawData.length?s.currentIndex:0;
+    currentPosition=Number.isInteger(s.currentPosition)?s.currentPosition:0;
+  }catch(e){console.warn('Không khôi phục được tiến độ:',e);}
+}
+function rebuildWrongList(){wrongList.clear();Object.entries(answerHistory).forEach(([i,a])=>{const q=rawData[Number(i)];if(q&&a&&q.ans&&a.correct===false&&(Array.isArray(a.attempts)&&a.attempts.length>0))wrongList.add(Number(i));});}
+function getQueue(){return quizMode==='wrong'?questionOrder.filter(i=>wrongList.has(i)):questionOrder;}
+function setText(id,value){const el=$(id);if(el)el.textContent=value;}
+function updateStats(){const total=rawData.length;const records=Object.entries(answerHistory).filter(([i,a])=>rawData[Number(i)]&&a&&Array.isArray(a.attempts)&&a.attempts.length>0);const attempted=records.length;const graded=records.filter(([i])=>!!rawData[Number(i)].ans);const correct=graded.filter(([,a])=>a.correct===true).length;const wrong=wrongList.size;const accuracy=graded.length?Math.round(correct/graded.length*100):0;
+ setText('total-count',total);setText('answered-count',attempted);setText('correct-count',correct);setText('wrong-count',wrong);setText('unanswered-count',total-attempted);setText('accuracy-rate',accuracy+'%');$('progress-bar').style.width=(total?attempted/total*100:0)+'%';setText('wrong-badge',wrong);setText('wrong-list-count',wrong);
+}
+function updateWrongHistory(){const box=$('wrong-history');box.replaceChildren();setText('wrong-count',wrongList.size);setText('wrong-list-count',wrongList.size);setText('wrong-badge',wrongList.size);
+ if(!wrongList.size){const span=document.createElement('span');span.className='empty';span.textContent='Chưa có câu sai. Cứ bình tĩnh chinh phục từng câu!';box.append(span);return;}
+ [...wrongList].sort((a,b)=>a-b).forEach(i=>{const b=document.createElement('button');b.className='wrong-item';b.textContent='Câu '+rawData[i].id;b.title='Mở câu này để ôn lại';b.addEventListener('click',()=>{quizMode='wrong';if(answerHistory[i])answerHistory[i].selected=null;const q=getQueue();currentPosition=q.indexOf(i);renderQuestion();});box.append(b);});
+}
+function renderQuestion(){const queue=getQueue();$('mode-label').textContent=quizMode==='wrong'?'Ôn tập câu sai':'Học toàn bộ';
+ if(!queue.length){currentPosition=0;answered=false;setText('current-index','Hoàn thành');setText('question-text',quizMode==='wrong'?'Bạn đã xử lý hết các câu sai. Tuyệt vời!':'Không có câu hỏi để hiển thị.');$('options-container').replaceChildren();$('explanation-box').hidden=true;updateStats();updateWrongHistory();saveProgress();return;}
+ currentPosition=Math.max(0,Math.min(currentPosition,queue.length-1));currentIndex=queue[currentPosition];const q=rawData[currentIndex];const previous=answerHistory[currentIndex];answered=!!(previous&&previous.selected);
+ setText('current-index',`Câu ${currentPosition+1}/${queue.length} · Mã ${q.id}`);setText('question-text',`Câu ${q.id}: ${q.q}`);
+ const keys=optionKeys.filter(k=>String(q[k]??'').trim()!=='');let order=keys;
+ if(shuffleAnswerEnabled){let saved=optionOrders[currentIndex];if(!Array.isArray(saved)||saved.length!==keys.length||!keys.every(k=>saved.includes(k)))saved=optionOrders[currentIndex]=shuffleArray(keys);order=saved;}else order=keys;
+ const container=$('options-container');container.replaceChildren();
+ order.forEach((key,pos)=>{const btn=document.createElement('button');btn.type='button';btn.className='option';btn.dataset.opt=key.toUpperCase();btn.dataset.position=String(pos);const letter=document.createElement('span');letter.className='letter';letter.textContent=String.fromCharCode(65+pos);const text=document.createElement('span');text.className='opt-text';text.textContent=String(q[key]);btn.append(letter,text);btn.addEventListener('click',()=>checkAnswer(key.toUpperCase(),btn));
+  if(answered){btn.classList.add('disabled');btn.disabled=true;if(q.ans&&key.toUpperCase()===q.ans)btn.classList.add('correct');if(key.toUpperCase()===previous.selected&&previous.selected!==q.ans)btn.classList.add('wrong');}
+  container.append(btn);
+ });
+ const feedback=$('explanation-box');feedback.hidden=!answered;feedback.className='feedback'+(answered?(previous.correct?' good':' bad'):'');
+ if(answered){setText('feedback-title',!q.ans?'Chưa có đáp án chuẩn trong dữ liệu':previous.correct?'✓ Chính xác!':'✕ Chưa chính xác');setText('explanation-text',q.explanation||(q.ans?`Đáp án đúng: ${q.ans}.`:'Câu này chưa có trường đáp án (ans) trong file dữ liệu. Bạn có thể xem lại tài liệu gốc để xác nhận.'));}
+ $('prev-btn').disabled=currentPosition===0;$('next-btn').disabled=currentPosition>=queue.length-1;updateStats();updateWrongHistory();saveProgress();
+}
+function checkAnswer(selected,element){if(answered)return;const q=rawData[currentIndex];const correct=q.ans||'';const hasKey=!!correct;const isCorrect=hasKey&&selected===correct;const previous=answerHistory[currentIndex]||{attempts:[]};const attempts=Array.isArray(previous.attempts)?previous.attempts:[];attempts.push({selected,correct:isCorrect,at:Date.now()});answerHistory[currentIndex]={selected,correct:isCorrect,attempts};answered=true;
+ [...$('options-container').querySelectorAll('.option')].forEach(btn=>{btn.disabled=true;btn.classList.add('disabled');if(correct&&btn.dataset.opt===correct)btn.classList.add('correct');});
+ if(hasKey&&!isCorrect){element.classList.add('wrong');wrongList.add(currentIndex);}else if(hasKey&&isCorrect){wrongList.delete(currentIndex);}else{element.classList.add('wrong');}
+ const feedback=$('explanation-box');feedback.hidden=false;feedback.className='feedback'+(hasKey?(isCorrect?' good':' bad'):'');setText('feedback-title',!hasKey?'Chưa có đáp án chuẩn trong dữ liệu':isCorrect?'✓ Chính xác!':'✕ Chưa chính xác');setText('explanation-text',q.explanation||(hasKey?`Đáp án đúng: ${correct}.`:'Câu này chưa có đáp án trong file dữ liệu nên chưa thể chấm đúng/sai.'));
+ updateStats();updateWrongHistory();saveProgress();
+}
+function nextQuestion(){const q=getQueue();if(currentPosition<q.length-1){currentPosition++;renderQuestion();}else showToast(quizMode==='wrong'?'Đã đến câu cuối của danh sách ôn tập.':'Đã đến câu cuối của bộ câu hỏi.');}
+function prevQuestion(){if(currentPosition>0){currentPosition--;renderQuestion();}}
+function jumpToQuestion(){const input=$('jump-input');const n=Number.parseInt(input.value,10);const q=getQueue();if(Number.isInteger(n)&&n>=1&&n<=q.length){currentPosition=n-1;renderQuestion();input.value='';}else showToast(`Nhập số câu từ 1 đến ${q.length}.`);}
+function shuffleQuestions(){shuffleQuestionEnabled=!shuffleQuestionEnabled;questionOrder=shuffleQuestionEnabled?shuffleArray(rawData.map((_,i)=>i)):rawData.map((_,i)=>i);const q=getQueue();currentPosition=Math.max(0,q.indexOf(currentIndex));setText('shuffle-question-status',shuffleQuestionEnabled?'Bật':'Tắt');renderQuestion();}
+function shuffleAnswers(){shuffleAnswerEnabled=!shuffleAnswerEnabled;optionOrders={};setText('shuffle-answer-status',shuffleAnswerEnabled?'Bật':'Tắt');renderQuestion();}
+function startWrongReview(){if(!wrongList.size){showToast('Chưa có câu sai để ôn tập.');return;}quizMode='wrong';for(const i of wrongList){if(answerHistory[i])answerHistory[i].selected=null;}currentPosition=0;renderQuestion();}
+function showAllQuestions(){quizMode='all';const p=questionOrder.indexOf(currentIndex);currentPosition=p>=0?p:0;renderQuestion();}
+function resetProgress(){if(!confirm('Xóa toàn bộ tiến độ và lịch sử trả lời trên trình duyệt này?'))return;answerHistory={};wrongList.clear();quizMode='all';questionOrder=shuffleQuestionEnabled?shuffleArray(rawData.map((_,i)=>i)):rawData.map((_,i)=>i);optionOrders={};currentPosition=0;localStorage.removeItem(STORAGE_KEY);renderQuestion();showToast('Đã xóa tiến độ học.');}
+function showToast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2300);}
+function parseCSV(text){text=text.replace(/^\uFEFF/,'');const first=text.split(/\r?\n/,1)[0]||'';const delimiters=[',',';','\t'];function count(line,d){let n=0,quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"'){if(quoted&&line[i+1]==='"')i++;else quoted=!quoted;}else if(line[i]===d&&!quoted)n++;}return n;}const delimiter=delimiters.sort((a,b)=>count(first,b)-count(first,a))[0];const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i],next=text[i+1];if(c==='"'){if(quoted&&next==='"'){cell+='"';i++;}else quoted=!quoted;}else if(c===delimiter&&!quoted){row.push(cell);cell='';}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&next==='\n')i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell='';}else cell+=c;}row.push(cell);if(row.some(v=>v.trim()))rows.push(row);if(quoted)throw new Error('CSV có dấu ngoặc kép chưa đóng.');if(rows.length<2)throw new Error('CSV không có dữ liệu.');const headers=rows.shift().map(h=>h.trim().replace(/^\uFEFF/,'').toLowerCase());return rows.map(values=>{const item={};headers.forEach((h,i)=>item[h]=(values[i]??'').trim());return item;});}
+function importDataFile(file){const reader=new FileReader();reader.onload=()=>{try{const text=String(reader.result||'');let data;if(file.name.toLowerCase().endsWith('.json'))data=JSON.parse(text);else data=parseCSV(text);const checked=normalizeData(data);if(!confirm(`Nạp ${checked.length} câu hỏi mới? Tiến độ của bộ câu hỏi hiện tại sẽ được giữ tách biệt và không áp dụng cho bộ mới.`))return;rawData.splice(0,rawData.length,...checked);startFreshData();showToast(`Đã nạp ${rawData.length} câu hỏi.`);}catch(e){alert('Không thể nạp dữ liệu: '+e.message);}};reader.onerror=()=>alert('Không đọc được file.');reader.readAsText(file,'UTF-8');}
+function startFreshData(){DATA_FINGERPRINT=fingerprint(rawData);answerHistory={};wrongList.clear();optionOrders={};questionOrder=rawData.map((_,i)=>i);currentIndex=0;currentPosition=0;quizMode='all';shuffleQuestionEnabled=false;shuffleAnswerEnabled=false;localStorage.removeItem(STORAGE_KEY);$('subtitle').textContent=`${rawData.length.toLocaleString('vi-VN')} câu hỏi · Dữ liệu đang dùng trong phiên này`;renderQuestion();}
+function init(){rawData.splice(0,rawData.length,...normalizeData(rawData));questionOrder=rawData.map((_,i)=>i);loadProgress();rebuildWrongList();const q=getQueue();const p=q.indexOf(currentIndex);currentPosition=p>=0?p:0;if(!q.length&&quizMode==='wrong')quizMode='all';setText('subtitle',`${rawData.length.toLocaleString('vi-VN')} câu hỏi · Dữ liệu tích hợp trong file HTML`);setText('shuffle-question-status',shuffleQuestionEnabled?'Bật':'Tắt');setText('shuffle-answer-status',shuffleAnswerEnabled?'Bật':'Tắt');renderQuestion();}
+$('prev-btn').addEventListener('click',prevQuestion);$('next-btn').addEventListener('click',nextQuestion);$('jump-btn').addEventListener('click',jumpToQuestion);$('jump-input').addEventListener('keydown',e=>{if(e.key==='Enter')jumpToQuestion();});$('shuffle-question-btn').addEventListener('click',shuffleQuestions);$('shuffle-answer-btn').addEventListener('click',shuffleAnswers);$('review-wrong-btn').addEventListener('click',startWrongReview);$('all-questions-btn').addEventListener('click',showAllQuestions);$('reset-progress-btn').addEventListener('click',resetProgress);$('upload-trigger').addEventListener('click',()=>$('data-file').click());$('data-file').addEventListener('change',e=>{if(e.target.files[0])importDataFile(e.target.files[0]);e.target.value='';});
+document.addEventListener('keydown',e=>{const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();nextQuestion();return;}if(e.key==='ArrowLeft'){e.preventDefault();prevQuestion();return;}if(/^[a-z]$/i.test(e.key)&&!answered){const pos=e.key.toLowerCase().charCodeAt(0)-97;const options=$('options-container').querySelectorAll('.option');if(options[pos]){e.preventDefault();options[pos].click();}}});
+window.addEventListener('beforeunload',saveProgress);
+try{init();}catch(e){console.error(e);$('question-text').textContent='Không thể khởi tạo bộ câu hỏi: '+e.message;}
 </script>
-
 </body>
 </html>
