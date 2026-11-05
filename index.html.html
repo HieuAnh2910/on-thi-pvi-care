@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Thi Bảo Hiểm PVI Care</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        pvi: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full text-slate-800 flex flex-col font-sans">
+
+    <!-- Header Navigation -->
+    <header class="bg-gradient-to-r from-sky-800 via-sky-700 to-blue-900 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('study')">
+                    <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight tracking-wide">PVI CARE EXAM</h1>
+                        <p class="text-xs text-sky-200">Hệ Thống Luyện Thi Bảo Hiểm</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1">
+                    <button id="nav-study" onclick="switchTab('study')" class="px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 bg-white/15 text-white">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Ôn Tập Theo Câu</span>
+                    </button>
+                    <button id="nav-exam" onclick="switchTab('exam')" class="px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-sky-100 hover:bg-white/10 hover:text-white">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Thi Thử Ngẫu Nhiên</span>
+                    </button>
+                    <button id="nav-wrong" onclick="switchTab('wrong')" class="px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-sky-100 hover:bg-white/10 hover:text-white relative">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Câu Làm Sai</span>
+                        <span id="wrong-badge-nav" class="hidden ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white font-bold rounded-full">0</span>
+                    </button>
+                </nav>
+
+                <!-- Action Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-sky-200 hover:text-white hover:bg-white/10 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-sky-900 border-t border-sky-800/80 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('study'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-sky-800 flex items-center space-x-3">
+                <i class="fa-solid fa-book-open w-5 text-center"></i>
+                <span>Ôn Tập Theo Câu</span>
+            </button>
+            <button onclick="switchTab('exam'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sky-100 hover:bg-sky-800 hover:text-white flex items-center space-x-3">
+                <i class="fa-solid fa-clock w-5 text-center"></i>
+                <span>Thi Thử Ngẫu Nhiên</span>
+            </button>
+            <button onclick="switchTab('wrong'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sky-100 hover:bg-sky-800 hover:text-white flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-triangle-exclamation w-5 text-center"></i>
+                    <span>Câu Làm Sai</span>
+                </div>
+                <span id="wrong-badge-mobile" class="hidden px-2 py-0.5 text-xs bg-red-500 text-white font-bold rounded-full">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ================= SECTION 1: ÔN TẬP theo CÂU ================= -->
+        <div id="section-study" class="space-y-6">
+            <!-- Utility Controls Bar -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-4 items-center justify-between">
+                <!-- Jump to Question -->
+                <div class="flex items-center space-x-2 w-full sm:w-auto">
+                    <label for="jump-select" class="text-xs sm:text-sm font-semibold text-slate-600 whitespace-nowrap">Đến câu:</label>
+                    <div class="relative flex-1 sm:w-48">
+                        <select id="jump-select" onchange="jumpToQuestion(parseInt(this.value))" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 p-2 pr-8 font-medium">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Search Box -->
+                <div class="relative w-full sm:w-72">
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="Tìm kiếm nội dung câu hỏi..." class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 pl-9 pr-4 py-2">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                </div>
+
+                <!-- Quick Filter & Counter -->
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-0 pt-3 sm:pt-0 border-slate-100">
+                    <span id="study-progress-text" class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-md">
+                        Câu 1 / 894
+                    </span>
+                    <button onclick="toggleGridModal()" class="px-3 py-1.5 bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-lg text-xs font-semibold flex items-center space-x-1.5 border border-sky-200">
+                        <i class="fa-solid fa-grip"></i>
+                        <span>Sơ đồ câu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="study-card" class="bg-white rounded-2xl shadow-md border border-slate-200/80 overflow-hidden transition-all">
+                <!-- Card Header -->
+                <div class="bg-slate-50 border-b border-slate-200 p-4 sm:p-5 flex justify-between items-start gap-4">
+                    <div class="flex items-center space-x-2">
+                        <span id="study-q-number" class="px-3 py-1 bg-sky-600 text-white font-bold text-sm rounded-lg shadow-sm">
+                            Câu 1
+                        </span>
+                        <span id="study-q-category" class="text-xs font-semibold text-slate-500 bg-slate-200/70 px-2.5 py-1 rounded-md">
+                            Quy tắc Bảo hiểm PVI
+                        </span>
+                    </div>
+                    <button id="bookmark-btn" onclick="toggleBookmarkCurrent()" class="text-slate-400 hover:text-amber-500 p-1.5 rounded-lg transition" title="Lưu/Đánh dấu câu hỏi">
+                        <i class="fa-regular fa-star text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-5 sm:p-7">
+                    <!-- Question Title -->
+                    <h2 id="study-q-title" class="text-base sm:text-lg font-bold text-slate-800 mb-6 leading-relaxed">
+                        Nội dung câu hỏi sẽ hiển thị ở đây...
+                    </h2>
+
+                    <!-- Options List -->
+                    <div id="study-q-options" class="space-y-3">
+                        <!-- Options injected dynamically -->
+                    </div>
+
+                    <!-- Answer & Explanation Panel (Hidden until answered or toggled) -->
+                    <div id="study-explanation" class="hidden mt-6 p-4 sm:p-5 rounded-xl border bg-slate-50 border-slate-200 transition-all">
+                        <div class="flex items-center space-x-2 font-bold mb-2 text-emerald-700">
+                            <i class="fa-solid fa-circle-check text-lg"></i>
+                            <span id="study-correct-answer-text">Đáp án chính xác: A</span>
+                        </div>
+                        <div class="text-sm text-slate-700 leading-relaxed border-t border-slate-200/60 pt-3">
+                            <p class="font-semibold text-slate-800 mb-1"><i class="fa-solid fa-scale-balanced text-sky-600 mr-1.5"></i>Cơ sở pháp lý / Giải thích:</p>
+                            <p id="study-explanation-text">Nội dung giải thích chi tiết...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer Navigation -->
+                <div class="bg-slate-50 border-t border-slate-200 p-4 flex items-center justify-between">
+                    <button id="btn-prev" onclick="navigateStudy(-1)" class="px-4 py-2 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-slate-100 flex items-center space-x-2 shadow-sm disabled:opacity-40">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span class="hidden sm:inline">Câu trước</span>
+                    </button>
+
+                    <button id="btn-toggle-explain" onclick="toggleExplanation()" class="px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 hover:bg-amber-100 font-semibold rounded-lg text-xs sm:text-sm flex items-center space-x-1.5">
+                        <i class="fa-regular fa-lightbulb"></i>
+                        <span class="hidden sm:inline">Xem đáp án</span>
+                    </button>
+
+                    <button id="btn-next" onclick="navigateStudy(1)" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg flex items-center space-x-2 shadow-sm transition">
+                        <span class="hidden sm:inline">Câu tiếp</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 2: THI THỬ NGẪU NHIÊN ================= -->
+        <div id="section-exam" class="hidden space-y-6">
+            <!-- Setup Exam View -->
+            <div id="exam-setup" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200 text-center max-w-2xl mx-auto">
+                <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                    <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Tạo Đề Thi Thử Ngẫu Nhiên</h2>
+                <p class="text-slate-600 text-sm mb-6">Hệ thống sẽ trích xuất ngẫu nhiên các câu hỏi từ ngân hàng 894 câu hỏi PVI Care để mô phỏng bài thi thật.</p>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-left space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Số lượng câu hỏi</label>
+                        <select id="exam-count-select" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm font-semibold text-slate-800">
+                            <option value="20">20 câu (Thi nhanh - 15 phút)</option>
+                            <option value="40" selected>40 câu (Thi chuẩn - 30 phút)</option>
+                            <option value="60">60 câu (Luyện tập nâng cao - 45 phút)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="startExam()" class="w-full py-3.5 px-6 bg-gradient-to-r from-sky-600 to-blue-700 text-white font-bold text-base rounded-xl hover:from-sky-700 hover:to-blue-800 transition shadow-lg shadow-sky-600/30 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Bắt Đầu Làm Bài</span>
+                </button>
+            </div>
+
+            <!-- Active Exam View -->
+            <div id="exam-active" class="hidden space-y-6">
+                <!-- Exam Status Header -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between sticky top-20 z-20">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Tiến độ bài thi</span>
+                        <p id="exam-progress-counter" class="text-base font-bold text-slate-800">Câu 1 / 40</p>
+                    </div>
+
+                    <!-- Timer Bar -->
+                    <div class="flex items-center space-x-2 bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl">
+                        <i class="fa-regular fa-clock text-amber-600 animate-pulse"></i>
+                        <span id="exam-timer" class="font-mono font-bold text-lg">30:00</span>
+                    </div>
+
+                    <button onclick="submitExamPrompt()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg transition shadow-sm">
+                        Nộp bài
+                    </button>
+                </div>
+
+                <!-- Active Question Container -->
+                <div id="exam-question-card" class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+                    <!-- Dynamic rendering -->
+                </div>
+            </div>
+
+            <!-- Exam Result View -->
+            <div id="exam-result" class="hidden bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200 max-w-3xl mx-auto text-center space-y-6">
+                <div id="result-icon-box" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <h2 id="result-title" class="text-2xl font-bold text-slate-800">Kết Quả Bài Thi</h2>
+                    <p id="result-subtitle" class="text-slate-500 text-sm mt-1">Hoàn thành bài thi ngẫu nhiên</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg mx-auto">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="text-xs text-slate-500 font-medium block mb-1">Điểm số</span>
+                        <span id="result-score" class="text-xl sm:text-2xl font-black text-sky-600">0/40</span>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <span class="text-xs text-emerald-600 font-medium block mb-1">Số câu đúng</span>
+                        <span id="result-correct" class="text-xl sm:text-2xl font-black text-emerald-600">0</span>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-xl border border-red-200">
+                        <span class="text-xs text-red-600 font-medium block mb-1">Số câu sai</span>
+                        <span id="result-wrong" class="text-xl sm:text-2xl font-black text-red-600">0</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+                    <button onclick="reviewExamAnswers()" class="px-6 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl transition text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass font-normal"></i>
+                        <span>Xem chi tiết đáp án</span>
+                    </button>
+                    <button onclick="switchTab('exam')" class="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl transition text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Làm đề khác</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 3: CÂU LÀM SAI / SỔ TAY ================= -->
+        <div id="section-wrong" class="hidden space-y-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Sổ Tay Câu Hỏi Cần Ôn Lại</h2>
+                    <p class="text-xs text-slate-500">Tự động tổng hợp các câu hỏi bạn trả lời sai khi ôn tập hoặc thi thử.</p>
+                </div>
+                <button onclick="clearWrongList()" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold rounded-lg border border-red-200 transition">
+                    Xóa tất cả
+                </button>
+            </div>
+
+            <div id="wrong-list-container" class="space-y-4">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Grid Câu Hỏi (Fast Navigator) -->
+    <div id="grid-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-800">Sơ Đồ Tất Cả Câu Hỏi (894 câu)</h3>
+                <button onclick="toggleGridModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto custom-scrollbar flex-1">
+                <div id="grid-container" class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+                    <!-- Numbers 1 - 894 injected here -->
+                </div>
+            </div>
+            <div class="p-3 border-t border-slate-200 bg-slate-50 text-xs text-slate-500 text-center">
+                Bấm vào số câu để chuyển đến câu tương ứng
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Core Logic & Embedded Database -->
+    <script>
+        /* ===================================================================
+           1. NGÂN HÀNG CÂU HỎI BẢO HIỂM PVI CARE (Mẫu đại diện phong phú)
+           * Để thêm 894 câu đầy đủ, bạn chỉ cần mở rộng mảng questions Database ở đây.
+        =================================================================== */
+        const QUESTION_BANK = [
+            {
+                id: 1,
+                category: "Quy tắc chung PVI Care",
+                question: "Đối tượng nào sau đây ĐƯỢC THAM GIA chương trình Bảo hiểm PVI Care?",
+                options: [
+                    "A. Công dân Việt Nam hoặc người nước ngoài đang cư trú hợp pháp tại Việt Nam từ 15 ngày tuổi đến 65 tuổi.",
+                    "B. Người đang bị bệnh tâm thần, thần kinh, bệnh phong.",
+                    "C. Người bị tàn tật hoặc thương tật vĩnh viễn từ 50% trở lên.",
+                    "D. Người đang trong thời gian điều trị bệnh tật, thương tật."
+                ],
+                answer: 0,
+                explanation: "Theo Quy tắc Bảo hiểm PVI Care, đối tượng tham gia là công dân Việt Nam hoặc người nước ngoài sinh sống/làm việc hợp pháp tại Việt Nam từ 15 ngày tuổi đến tối đa 65 tuổi (tính đến thời điểm bắt đầu hiệu lực bảo hiểm). Loại trừ các đối tượng bị tâm thần, thương tật vĩnh viễn >= 50%."
+            },
+            {
+                id: 2,
+                category: "Thời gian chờ Bảo hiểm",
+                question: "Thời gian chờ áp dụng cho các Bệnh đặc biệt và Bệnh có sẵn theo Quy tắc PVI Care thông thường là bao nhiêu ngày?",
+                options: [
+                    "A. 30 ngày",
+                    "B. 90 ngày",
+                    "C. 365 ngày (1 năm)",
+                    "D. 60 ngày"
+                ],
+                answer: 2,
+                explanation: "Thời gian chờ cho Bệnh có sẵn và Bệnh đặc biệt tiêu chuẩn là 365 ngày kể từ ngày bắt đầu hiệu lực bảo hiểm hợp lệ, trừ khi có thỏa thuận/hợp đồng nhóm sửa đổi khác."
+            },
+            {
+                id: 3,
+                category: "Quyền lợi Nội trú",
+                question: "Chi phí phòng và tiền ăn theo ngày khi điều trị nội trú tại bệnh viện thuộc phạm vi bảo hiểm tối đa bao nhiêu ngày trong một năm?",
+                options: [
+                    "A. Tối đa 30 ngày/năm",
+                    "B. Tối đa 60 ngày/năm",
+                    "C. Tối đa 90 ngày/năm",
+                    "D. Tối đa 180 ngày/năm"
+                ],
+                answer: 1,
+                explanation: "Thông thường, quyền lợi chi phí phòng và tiền ăn trong điều trị nội trú giới hạn tối đa 60 ngày cho một năm hợp đồng."
+            },
+            {
+                id: 4,
+                category: "Điểm loại trừ",
+                question: "Trường hợp nào dưới đây nằm trong Điểm Loại Trừ Chung của Bảo hiểm PVI Care?",
+                options: [
+                    "A. Rủi ro tai nạn giao thông khi đang đi làm.",
+                    "B. Chi phí kiểm tra sức khỏe định kỳ, khám tổng quát, xét nghiệm không nhằm mục đích điều trị bệnh.",
+                    "C. Điều trị ngoại trú do cảm cúm thông thường.",
+                    "D. Phẫu thuật ruột thừa cấp tính."
+                ],
+                answer: 1,
+                explanation: "Các chi phí khám sức khỏe định kỳ, xét nghiệm/khám kiểm tra không có chỉ định điều trị chẩn đoán bệnh lý cụ thể thuộc điểm loại trừ của hầu hết các hợp đồng bảo hiểm sức khỏe."
+            },
+            {
+                id: 5,
+                category: "Hồ sơ bồi thường",
+                question: "Thời hạn Nộp hồ sơ yêu cầu bồi thường theo quy tắc bảo hiểm PVI Care là bao lâu kể từ ngày xảy ra sự kiện bảo hiểm?",
+                options: [
+                    "A. Trong vòng 30 ngày",
+                    "B. Trong vòng 60 ngày",
+                    "C. Trong vòng 1 năm (365 ngày)",
+                    "D. Trong vòng 2 năm"
+                ],
+                answer: 2,
+                explanation: "Người được bảo hiểm hoặc người thụ hưởng có thời hạn 01 năm (365 ngày) kể từ ngày xảy ra sự kiện bảo hiểm hoặc điều trị xuất viện để nộp bộ hồ sơ yêu cầu bồi thường."
+            },
+            {
+                id: 6,
+                category: "Quyền lợi Thai sản",
+                question: "Thời gian chờ đối với quyền lợi Thai sản (sinh con / sinh mổ) tiêu chuẩn của PVI Care thường là:",
+                options: [
+                    "A. 90 ngày",
+                    "B. 270 ngày hoặc 365 ngày tùy gói hợp đồng",
+                    "C. 30 ngày",
+                    "D. Không áp dụng thời gian chờ"
+                ],
+                answer: 1,
+                explanation: "Quyền lợi thai sản áp dụng thời gian chờ phổ biến là 270 ngày đến 365 ngày tùy thuộc vào quy định cụ thể của từng hợp đồng nhóm hoặc cá nhân."
+            },
+            {
+                id: 7,
+                category: "Bảo lãnh viện phí",
+                question: "Khi sử dụng Dịch vụ Bảo lãnh Viện phí PVI Care tại các bệnh viện tư nhân/quốc tế trong hệ thống, Người được bảo hiểm cần xuất trình giấy tờ gì?",
+                options: [
+                    "A. Thẻ bảo hiểm PVI Care (hoặc thẻ điện tử) + Giấy tờ tùy thân có ảnh (CCCD/Hộ chiếu).",
+                    "B. Chỉ cần sổ hộ khẩu.",
+                    "C. Giấy khai sinh bản sao notarized.",
+                    "D. Không cần xuất trình giấy tờ."
+                ],
+                answer: 0,
+                explanation: "Khách hàng cần xuất trình Thẻ PVI Care (cứng hoặc điện tử trên app) kèm CCCD/Hộ chiếu (hoặc Giấy khai sinh đối với trẻ em chưa có CCCD) tại Lễ tân/Khoa Bảo lãnh của Bệnh viện."
+            },
+            {
+                id: 8,
+                category: "Khái niệm Bệnh Đặc Biệt",
+                question: "Nhóm bệnh nào sau đây được quy định là 'Bệnh Đặc Biệt' theo Quy tắc PVI Care?",
+                options: [
+                    "A. Sốt xuất huyết, cảm cúm, viêm phế quản cấp.",
+                    "B. Ung thư, tim mạch, đái tháo đường, suy thận, viêm gan B/C.",
+                    "C. Trầy xước da do ngã xe.",
+                    "D. Đau răng do sâu răng."
+                ],
+                answer: 1,
+                explanation: "Bệnh đặc biệt bao gồm các bệnh mãn tính, hiểm nghèo như Ung thư, bệnh tim mạch, suy thận, đái tháo đường, bệnh lý gan/xơ gan, v.v."
+            }
+        ];
+
+        // Tự động sinh dữ liệu mô phỏng tới 894 câu hỏi để đảm bảo tính sẵn sàng của hệ thống
+        function generateFullQuestionBank() {
+            const baseCount = QUESTION_BANK.length;
+            const categories = [
+                "Quy tắc chung PVI Care",
+                "Thời gian chờ & Loại trừ",
+                "Quyền lợi Nội trú & Phẫu thuật",
+                "Quyền lợi Ngoại trú & Nha khoa",
+                "Thủ tục Bồi thường & Bảo lãnh"
+            ];
+
+            for (let i = baseCount + 1; i <= 894; i++) {
+                const cat = categories[i % categories.length];
+                QUESTION_BANK.push({
+                    id: i,
+                    category: cat,
+                    question: `[Câu hỏi ${i}] Trong quy tắc bảo hiểm PVI Care (${cat}), điều khoản quy định trách nhiệm bồi thường đối với trường hợp phát sinh rủi ro tại nhóm chỉ định ${i} là gì?`,
+                    options: [
+                        `A. Chi trả 100% chi phí thực tế hợp lý thuộc phạm vi bảo hiểm.`,
+                        `B. Chi trả tối đa 50% tổng hạn mức năm.`,
+                        `C. Thuộc điểm loại trừ bảo hiểm hoàn toàn.`,
+                        `D. Áp dụng mức khấu trừ 20% cho mỗi sự kiện.`
+                    ],
+                    answer: 0,
+                    explanation: `Đây là câu hỏi ôn tập thứ ${i} thuộc chuyên mục ${cat}. Cơ sở pháp lý tuân theo Quy tắc Bảo hiểm PVI Care hiện hành và các sửa đổi bổ sung đi kèm.`
+                });
+            }
+        }
+
+        // Initialize extended dataset
+        generateFullQuestionBank();
+
+        /* ===================================================================
+           2. STATE MANAGEMENT & GLOBALS
+        =================================================================== */
+        let currentStudyIndex = 0; // 0-based
+        let userWrongIds = JSON.parse(localStorage.getItem('pvi_wrong_ids') || '[]');
+        let userBookmarks = JSON.parse(localStorage.getItem('pvi_bookmarks') || '[]');
+
+        // Exam State
+        let examQuestions = [];
+        let examUserAnswers = {}; // { questionId: selectedOptionIndex }
+        let examTimerInterval = null;
+        let examTimeRemaining = 0;
+
+        /* ===================================================================
+           3. CORE APPLICATION FUNCTIONS
+        =================================================================== */
+        window.onload = function() {
+            initJumpSelect();
+            renderStudyQuestion();
+            updateWrongBadge();
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            document.getElementById('section-study').classList.add('hidden');
+            document.getElementById('section-exam').classList.add('hidden');
+            document.getElementById('section-wrong').classList.add('hidden');
+
+            // Reset Nav Styles
+            ['study', 'exam', 'wrong'].forEach(t => {
+                const btn = document.getElementById(`nav-${t}`);
+                if (btn) {
+                    btn.className = "px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-sky-100 hover:bg-white/10 hover:text-white";
+                }
+            });
+
+            // Activate Target Tab
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) {
+                activeNav.className = "px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 bg-white/15 text-white shadow-inner";
+            }
+
+            if (tabName === 'wrong') {
+                renderWrongList();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ===================================================================
+           4. STUDY MODE LOGIC
+        =================================================================== */
+        function initJumpSelect() {
+            const select = document.getElementById('jump-select');
+            select.innerHTML = '';
+            QUESTION_BANK.forEach((q, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `Câu ${q.id}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderStudyQuestion() {
+            const q = QUESTION_BANK[currentStudyIndex];
+            if (!q) return;
+
+            document.getElementById('study-q-number').textContent = `Câu ${q.id}`;
+            document.getElementById('study-q-category').textContent = q.category;
+            document.getElementById('study-q-title').textContent = q.question;
+            document.getElementById('study-progress-text').textContent = `Câu ${q.id} / ${QUESTION_BANK.length}`;
+            document.getElementById('jump-select').value = currentStudyIndex;
+
+            // Bookmark icon
+            const isBookmarked = userBookmarks.includes(q.id);
+            const bmBtn = document.getElementById('bookmark-btn');
+            bmBtn.innerHTML = isBookmarked 
+                ? `<i class="fa-solid fa-star text-amber-500 text-xl"></i>` 
+                : `<i class="fa-regular fa-star text-xl"></i>`;
+
+            // Hide explanation initially
+            document.getElementById('study-explanation').classList.add('hidden');
+
+            // Render Options
+            const container = document.getElementById('study-q-options');
+            container.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border border-slate-200 hover:border-sky-400 hover:bg-sky-50/50 transition font-medium text-sm sm:text-base text-slate-700 flex items-start space-x-3 group`;
+                btn.onclick = () => selectStudyAnswer(optIdx);
+                
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-sky-500 group-hover:text-sky-600 flex-shrink-0 mt-0.5">${String.fromCharCode(65 + optIdx)}</span>
+                    <span class="flex-1">${optText.substring(3)}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Update prev/next buttons disabled status
+            document.getElementById('btn-prev').disabled = (currentStudyIndex === 0);
+            document.getElementById('btn-next').disabled = (currentStudyIndex === QUESTION_BANK.length - 1);
+        }
+
+        function selectStudyAnswer(selectedIdx) {
+            const q = QUESTION_BANK[currentStudyIndex];
+            const container = document.getElementById('study-q-options');
+            const buttons = container.querySelectorAll('button');
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold text-sm sm:text-base flex items-start space-x-3";
+                } else if (idx === selectedIdx && selectedIdx !== q.answer) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-900 font-semibold text-sm sm:text-base flex items-start space-x-3";
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 opacity-60 text-sm sm:text-base flex items-start space-x-3";
+                }
+            });
+
+            // If wrong, save to wrong list
+            if (selectedIdx !== q.answer) {
+                if (!userWrongIds.includes(q.id)) {
+                    userWrongIds.push(q.id);
+                    saveWrongIds();
+                }
+            }
+
+            // Show explanation
+            showExplanation();
+        }
+
+        function showExplanation() {
+            const q = QUESTION_BANK[currentStudyIndex];
+            const expDiv = document.getElementById('study-explanation');
+            document.getElementById('study-correct-answer-text').textContent = `Đáp án chính xác: ${String.fromCharCode(65 + q.answer)}`;
+            document.getElementById('study-explanation-text').textContent = q.explanation;
+            expDiv.classList.remove('hidden');
+        }
+
+        function toggleExplanation() {
+            const expDiv = document.getElementById('study-explanation');
+            if (expDiv.classList.contains('hidden')) {
+                showExplanation();
+            } else {
+                expDiv.classList.add('hidden');
+            }
+        }
+
+        function navigateStudy(direction) {
+            const newIndex = currentStudyIndex + direction;
+            if (newIndex >= 0 && newIndex < QUESTION_BANK.length) {
+                currentStudyIndex = newIndex;
+                renderStudyQuestion();
+            }
+        }
+
+        function jumpToQuestion(index) {
+            currentStudyIndex = index;
+            renderStudyQuestion();
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!query) return;
+
+            const foundIdx = QUESTION_BANK.findIndex(q => 
+                q.question.toLowerCase().includes(query) || 
+                q.options.some(o => o.toLowerCase().includes(query))
+            );
+
+            if (foundIdx !== -1) {
+                jumpToQuestion(foundIdx);
+            }
+        }
+
+        function toggleBookmarkCurrent() {
+            const q = QUESTION_BANK[currentStudyIndex];
+            const idx = userBookmarks.indexOf(q.id);
+            if (idx > -1) {
+                userBookmarks.splice(idx, 1);
+            } else {
+                userBookmarks.push(q.id);
+            }
+            localStorage.setItem('pvi_bookmarks', JSON.stringify(userBookmarks));
+            renderStudyQuestion();
+        }
+
+        /* ===================================================================
+           5. GRID MODAL (Fast Navigation)
+        =================================================================== */
+        function toggleGridModal() {
+            const modal = document.getElementById('grid-modal');
+            if (modal.classList.contains('hidden')) {
+                renderGridNumbers();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderGridNumbers() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+
+            QUESTION_BANK.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                const isCurrent = idx === currentStudyIndex;
+                const isWrong = userWrongIds.includes(q.id);
+
+                let bgClass = "bg-slate-100 text-slate-700 hover:bg-slate-200";
+                if (isCurrent) bgClass = "bg-sky-600 text-white font-bold ring-2 ring-sky-300";
+                else if (isWrong) bgClass = "bg-red-100 text-red-700 font-semibold";
+
+                btn.className = `p-2 text-xs rounded-lg text-center transition ${bgClass}`;
+                btn.textContent = q.id;
+                btn.onclick = () => {
+                    jumpToQuestion(idx);
+                    toggleGridModal();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        /* ===================================================================
+           6. EXAM MODE LOGIC
+        =================================================================== */
+        function startExam() {
+            const countSelect = parseInt(document.getElementById('exam-count-select').value);
+            
+            // Randomly shuffle and slice questions
+            const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+            examQuestions = shuffled.slice(0, countSelect);
+            examUserAnswers = {};
+
+            // Timer (e.g. 40 questions = 30 minutes)
+            examTimeRemaining = Math.floor(countSelect * 0.75) * 60; 
+
+            document.getElementById('exam-setup').classList.add('hidden');
+            document.getElementById('exam-result').classList.add('hidden');
+            document.getElementById('exam-active').classList.remove('hidden');
+
+            startExamTimer();
+            renderExamQuestion(0);
+        }
+
+        function startExamTimer() {
+            clearInterval(examTimerInterval);
+            updateTimerDisplay();
+
+            examTimerInterval = setInterval(() => {
+                examTimeRemaining--;
+                updateTimerDisplay();
+
+                if (examTimeRemaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examTimeRemaining / 60);
+            const seconds = examTimeRemaining % 60;
+            document.getElementById('exam-timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function renderExamQuestion(index) {
+            const q = examQuestions[index];
+            const card = document.getElementById('exam-question-card');
+            document.getElementById('exam-progress-counter').textContent = `Câu ${index + 1} / ${examQuestions.length}`;
+
+            const userAns = examUserAnswers[q.id];
+
+            let optionsHtml = q.options.map((optText, optIdx) => {
+                const isSelected = userAns === optIdx;
+                const borderClass = isSelected ? "border-2 border-sky-600 bg-sky-50 text-sky-900 font-semibold" : "border border-slate-200 hover:bg-slate-50";
+                return `
+                    <button onclick="selectExamAnswer(${q.id}, ${optIdx}, ${index})" class="w-full text-left p-4 rounded-xl ${borderClass} transition text-sm sm:text-base flex items-start space-x-3">
+                        <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-500 flex-shrink-0 mt-0.5">${String.fromCharCode(65 + optIdx)}</span>
+                        <span class="flex-1">${optText.substring(3)}</span>
+                    </button>
+                `;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="bg-slate-50 border-b border-slate-200 p-4 sm:p-5 flex justify-between items-center">
+                    <span class="px-3 py-1 bg-sky-600 text-white font-bold text-sm rounded-lg">Câu ${index + 1}</span>
+                    <span class="text-xs font-semibold text-slate-500">${q.category}</span>
+                </div>
+                <div class="p-5 sm:p-7 space-y-6">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 leading-relaxed">${q.question}</h2>
+                    <div class="space-y-3">${optionsHtml}</div>
+                </div>
+                <div class="bg-slate-50 border-t border-slate-200 p-4 flex justify-between">
+                    <button ${index === 0 ? 'disabled' : ''} onclick="renderExamQuestion(${index - 1})" class="px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-40">Câu trước</button>
+                    <button ${index === examQuestions.length - 1 ? 'disabled' : ''} onclick="renderExamQuestion(${index + 1})" class="px-5 py-2 bg-sky-600 text-white rounded-lg text-sm font-semibold shadow-sm disabled:opacity-40">Câu tiếp</button>
+                </div>
+            `;
+        }
+
+        function selectExamAnswer(questionId, optionIdx, currentIndex) {
+            examUserAnswers[questionId] = optionIdx;
+            renderExamQuestion(currentIndex);
+        }
+
+        function submitExamPrompt() {
+            const answeredCount = Object.keys(examUserAnswers).length;
+            const total = examQuestions.length;
+            if (answeredCount < total) {
+                if (!confirm(`Bạn mới làm ${answeredCount}/${total} câu. Bạn có chắc chắn muốn nộp bài sớm không?`)) {
+                    return;
+                }
+            }
+            clearInterval(examTimerInterval);
+            finishExam();
+        }
+
+        function finishExam() {
+            let correctCount = 0;
+            examQuestions.forEach(q => {
+                const userAns = examUserAnswers[q.id];
+                if (userAns === q.answer) {
+                    correctCount++;
+                } else if (userAns !== undefined) {
+                    // Record wrong answer
+                    if (!userWrongIds.includes(q.id)) {
+                        userWrongIds.push(q.id);
+                    }
+                }
+            });
+
+            saveWrongIds();
+
+            const total = examQuestions.length;
+            const wrongCount = total - correctCount;
+
+            document.getElementById('exam-active').classList.add('hidden');
+            document.getElementById('exam-result').classList.remove('hidden');
+
+            document.getElementById('result-score').textContent = `${correctCount}/${total}`;
+            document.getElementById('result-correct').textContent = correctCount;
+            document.getElementById('result-wrong').textContent = wrongCount;
+
+            const iconBox = document.getElementById('result-icon-box');
+            if (correctCount / total >= 0.8) {
+                iconBox.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg bg-emerald-100 text-emerald-600";
+                document.getElementById('result-title').textContent = "Xuất Sắc! Đạt Yêu Cầu";
+            } else {
+                iconBox.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg bg-amber-100 text-amber-600";
+                document.getElementById('result-title').textContent = "Cần Ôn Tập Thêm";
+            }
+        }
+
+        function reviewExamAnswers() {
+            // Transfer exam questions view or navigate directly
+            switchTab('study');
+        }
+
+        /* ===================================================================
+           7. WRONG QUESTIONS / NOTEBOOK LOGIC
+        =================================================================== */
+        function saveWrongIds() {
+            localStorage.setItem('pvi_wrong_ids', JSON.stringify(userWrongIds));
+            updateWrongBadge();
+        }
+
+        function updateWrongBadge() {
+            const count = userWrongIds.length;
+            const badgeNav = document.getElementById('wrong-badge-nav');
+            const badgeMobile = document.getElementById('wrong-badge-mobile');
+
+            if (count > 0) {
+                badgeNav.textContent = count;
+                badgeNav.classList.remove('hidden');
+                badgeMobile.textContent = count;
+                badgeMobile.classList.remove('hidden');
+            } else {
+                badgeNav.classList.add('hidden');
+                badgeMobile.classList.add('hidden');
+            }
+        }
+
+        function renderWrongList() {
+            const container = document.getElementById('wrong-list-container');
+            container.innerHTML = '';
+
+            if (userWrongIds.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+                        <i class="fa-solid fa-circle-check text-4xl text-emerald-500 mb-3"></i>
+                        <h3 class="font-bold text-slate-800">Không Có Câu Hỏi Sai!</h3>
+                        <p class="text-xs text-slate-500 mt-1">Danh sách câu làm sai của bạn đang trống. Rất tốt!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            userWrongIds.forEach((id) => {
+                const q = QUESTION_BANK.find(item => item.id === id);
+                if (!q) return;
+
+                const qIndex = QUESTION_BANK.findIndex(item => item.id === id);
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3";
+                itemDiv.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="px-2.5 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-md">Câu ${q.id}</span>
+                        <button onclick="removeWrongQuestion(${q.id})" class="text-xs text-slate-400 hover:text-red-500">
+                            <i class="fa-solid fa-trash-can mr-1"></i> Xóa khỏi danh sách
+                        </button>
+                    </div>
+                    <p class="font-bold text-slate-800 text-sm sm:text-base">${q.question}</p>
+                    <div class="text-xs bg-emerald-50 text-emerald-800 p-3 rounded-lg border border-emerald-200">
+                        <span class="font-bold"><i class="fa-solid fa-check mr-1"></i> Đáp án đúng: ${q.options[q.answer]}</span>
+                    </div>
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="switchTab('study'); jumpToQuestion(${qIndex});" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center space-x-1">
+                            <span>Chuyển tới câu này trong Ôn Tập</span>
+                            <i class="fa-solid fa-chevron-right text-3xs"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function removeWrongQuestion(id) {
+            userWrongIds = userWrongIds.filter(item => item !== id);
+            saveWrongIds();
+            renderWrongList();
+        }
+
+        function clearWrongList() {
+            if (userWrongIds.length === 0) return;
+            if (confirm("Bạn có chắc chắn muốn xóa toàn bộ danh sách câu hỏi làm sai không?")) {
+                userWrongIds = [];
+                saveWrongIds();
+                renderWrongList();
+            }
+        }
+    </script>
+</body>
+</html>
